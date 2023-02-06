@@ -1,2 +1,4 @@
 /node_modules
 *package-lock.json
+# API_KEY
+.env
