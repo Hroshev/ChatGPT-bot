@@ -28,11 +28,6 @@ function getOpenai(model, temperature, max_tokens, top_p, frequency_penalty, pre
   
 const bot = new Telegraf(process.env.BOOT_TOKEN);
 
-// bot.catch((err, ctx) => {
-//     functions.logger.error('[Bot] Error', err)
-//     return ctx.reply(`Ooops, bot encountered an error for ${ctx.updateType}`, err)
-// })
-
 //Set bot commands
 bot.telegram.setMyCommands([
     {command: 'start', description:'Начальное приветствие'},
@@ -65,8 +60,3 @@ bot.command('code', async (ctx) => {
 })
 
 bot.launch()
-
-// exports.echoBot = functions.https.onRequest(async (request, response) => {
-//   functions.logger.log("Incoming message", request.body)
-//   bot.handleUpdate(request.body, response);
-// });
