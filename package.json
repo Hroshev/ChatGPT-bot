@@ -1,15 +1,14 @@
 {
-  "name": "telegram-bot_openai",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "name": "functions",
+  "description": "OpenAI chatbot",
   "scripts": {
     "dev": "nodemon index.js",
-    "start": "node index.js"
+    "start": "npm index.js"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "engines": {
+    "node": "16"
+  },
+  "main": "index.js",
   "dependencies": {
     "dotenv": "^16.0.3",
     "openai": "^3.1.0",
@@ -17,5 +16,6 @@
   },
   "devDependencies": {
     "nodemon": "^2.0.20"
-  }
+  },
+  "private": true
 }

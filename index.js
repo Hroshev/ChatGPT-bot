@@ -28,6 +28,11 @@ function getOpenai(model, temperature, max_tokens, top_p, frequency_penalty, pre
   
 const bot = new Telegraf(process.env.BOOT_TOKEN);
 
+// bot.catch((err, ctx) => {
+//     functions.logger.error('[Bot] Error', err)
+//     return ctx.reply(`Ooops, bot encountered an error for ${ctx.updateType}`, err)
+// })
+
 //Set bot commands
 bot.telegram.setMyCommands([
     {command: 'start', description:'Начальное приветствие'},
@@ -39,20 +44,19 @@ bot.telegram.setMyCommands([
 //Start command
 bot.start(async (ctx) => {
     await ctx.reply('👋');
-    await ctx.reply(`Привет, ${ctx.from.first_name}!`);
-    await ctx.reply('Чтобы взаимодействовать с API OpenAI, выберите в меню модель соответствующую вашему вопросу.');
-    await ctx.reply('⚠️');
-    await ctx.reply('1.Данные обрабатываются в 2021 году, поэтому ИИ может не знать о текущих событиях.\n\n 2.Бот не отвечает на прошлые сообщения, данные обрабатываются на стороне сервера. \n\n 3.Бот отвечает только на тектовые сообщения');
+    await ctx.reply('Для взаимодействия с OpenAI, выберите в меню модель соответствующую вашему вопросу.');
+    await ctx.reply('⚠️Внимание!');
+    await ctx.reply('1.Данные обрабатываются в 2021 году, поэтому ИИ может не знать о текущих событиях.\n\n 2.Бот не отвечает на прошлые сообщения, данные обрабатываются на стороне сервера. \n\n 3.Бот отвечает только на текстовые сообщения');
 });
 
 //classic
 bot.command('classic', async (ctx) => {
-    await ctx.reply('Как я могу вам помочь?', getOpenai("text-davinci-003", 0.1, 1000, 1.0, 0.0, 0.0));
+    await ctx.reply('Как я могу вам помочь?', getOpenai("text-davinci-003", 0.0, 1000, 1.0, 0.0, 0.0));
 })
 
 //creative
 bot.command('creative', async (ctx) => {
-    await ctx.reply('Что нужно придумать или написать?', getOpenai("text-davinci-003", 0.6, 1000, 1.0, 0.5, 0.0))
+    await ctx.reply('Что нужно придумать или написать?', getOpenai("text-davinci-003", 0.5, 1000, 1.0, 0.5, 0.0))
 })
 
 //code
@@ -61,3 +65,8 @@ bot.command('code', async (ctx) => {
 })
 
 bot.launch()
+
+// exports.echoBot = functions.https.onRequest(async (request, response) => {
+//   functions.logger.log("Incoming message", request.body)
+//   bot.handleUpdate(request.body, response);
+// });
