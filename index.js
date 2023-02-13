@@ -1,6 +1,30 @@
 const dontev = require('dotenv').config();
 const { Telegraf } = require('telegraf');
 const { Configuration, OpenAIApi } = require("openai");
+  
+const bot = new Telegraf(process.env.BOOT_TOKEN);
+
+//Set bot commands
+bot.telegram.setMyCommands([
+    {command: 'start', description:'Начальное приветствие'},
+    {command: 'classic', description:'Классическиий режим'},
+    {command: 'creative', description:'Творческий режим'},
+    {command: 'code', description:'Написание кода'},
+]);
+
+//Start command
+bot.start(async (ctx) => {
+    await ctx.reply('👋');
+    await ctx.reply('Для взаимодействия с OpenAI, выберите в меню модель соответствующую вашему вопросу.');
+    await ctx.reply('⚠️Внимание!');
+    await ctx.reply('1.Данные обрабатываются в 2021 году, поэтому ИИ может не знать о текущих событиях.\n\n 2.Бот не отвечает на прошлые сообщения, данные обрабатываются на стороне сервера. \n\n 3.Бот отвечает только на текстовые сообщения');
+});
+
+//Help command
+bot.help(async (ctx) => await ctx.reply('Для взаимодействия с OpenAI, выберите в меню модель соответствующую вашему вопросу.'))
+
+//Send sticker
+bot.on('sticker', async (ctx) => await ctx.reply('👍'));
 
 function getOpenai(model, temperature, max_tokens, top_p, frequency_penalty, presence_penalty) {
     return (() => {
@@ -25,26 +49,8 @@ function getOpenai(model, temperature, max_tokens, top_p, frequency_penalty, pre
       });
     })();
   }
-  
-const bot = new Telegraf(process.env.BOOT_TOKEN);
 
-//Set bot commands
-bot.telegram.setMyCommands([
-    {command: 'start', description:'Начальное приветствие'},
-    {command: 'classic', description:'Классическиий режим'},
-    {command: 'creative', description:'Творческий режим'},
-    {command: 'code', description:'Написание кода'},
-]);
-
-//Start command
-bot.start(async (ctx) => {
-    await ctx.reply('👋');
-    await ctx.reply('Для взаимодействия с OpenAI, выберите в меню модель соответствующую вашему вопросу.');
-    await ctx.reply('⚠️Внимание!');
-    await ctx.reply('1.Данные обрабатываются в 2021 году, поэтому ИИ может не знать о текущих событиях.\n\n 2.Бот не отвечает на прошлые сообщения, данные обрабатываются на стороне сервера. \n\n 3.Бот отвечает только на текстовые сообщения');
-});
-
-//classic
+  //classic
 bot.command('classic', async (ctx) => {
     await ctx.reply('Как я могу вам помочь?', getOpenai("text-davinci-003", 0.0, 1000, 1.0, 0.0, 0.0));
 })
@@ -60,3 +66,7 @@ bot.command('code', async (ctx) => {
 })
 
 bot.launch()
+
+// Enable graceful stop
+process.once('SIGINT', () => bot.stop('SIGINT'));
+process.once('SIGTERM', () => bot.stop('SIGTERM'));
