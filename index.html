@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, user-scalable=no, user-scalable=0, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0 user-scalable=0">
+	<meta name="author" content="Hroshev Ivan (grosheff.ivan@gmail.com)">
+	<meta name="description" content="This site was created by Hroshev Ivan">
+    <title>TeleBot webHook for vercel</title>
+</head>
+<body>
+    <div class="container">
+        <form name="webhook" action="/api/setWebhook.mjs" method="post">
+            <span class="text">Press button, if you want set webhook url to host:</span>
+            <output class="text" id="host">localhost</output>
+            <br><br>
+            <button type="submit">Set WebHook URL</button>
+        </form>
+    </div>
+</body>
+<style>
+    body {
+        box-sizing: border-box;
+        background-color: #000;
+    }
+    .text {
+        display: block;
+        font-size: 24px;
+        color: #fff;
+    }
+    .container {
+        margin: 0 auto;
+        padding: 15px;
+        width: 100%;
+        max-width: 1200px;
+    }
+    button {
+        padding: 8px 12px;
+        font-size: 22px;
+        border-radius: 6px;
+        cursor: pointer;
+        color: #000;
+        background-color: rgba(240, 230, 219, 0.74);
+    }
+</style>
+<script>
+    document.getElementById('host').innerText = location.host
+</script>
+</html>

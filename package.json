@@ -3,21 +3,17 @@
   "description": "OpenAI chatbot",
   "author": "IvanHroshev",
   "version": "1.0.0",
-  "main": "index.js",
   "repository": {
-		"type": "git",
-		"url": "Hroshev"
-	},
+    "type": "git",
+    "url": "Hroshev"
+  },
   "scripts": {
-    "dev": "nodemon index.js",
-    "start": "node index.js"
+    "dev": "vc dev"
   },
   "dependencies": {
     "dotenv": "^16.0.3",
-    "openai": "^3.1.0",
-    "telegraf": "^4.11.2"
-  },
-  "devDependencies": {
-    "nodemon": "^2.0.20"
+    "openai": "latest",
+    "telebot": "latest",
+    "telebot-vercel": "latest"
   }
 }
