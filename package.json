@@ -2,18 +2,24 @@
   "name": "openai-bot",
   "description": "OpenAI chatbot",
   "author": "IvanHroshev",
-  "version": "1.0.0",
+  "version": "1.2.0",
   "repository": {
     "type": "git",
     "url": "Hroshev"
   },
   "scripts": {
-    "dev": "vc dev"
+    "dev": "vc dev",
+    "start": "ngrok http 3000"
   },
   "dependencies": {
-    "dotenv": "^16.0.3",
+    "dotenv": "latest",
+    "mongodb": "5.0",
+    "ngrok": "latest",
     "openai": "latest",
     "telebot": "latest",
     "telebot-vercel": "latest"
+  },
+  "peerDependencies": {
+    "vercel": "latest"
   }
 }
