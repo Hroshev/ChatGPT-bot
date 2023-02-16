@@ -1,25 +1,24 @@
 {
-  "name": "openai-bot",
-  "description": "OpenAI chatbot",
-  "author": "IvanHroshev",
-  "version": "1.2.0",
+  "name": "chat_gpt-bot",
+  "description": "ChatGPT bot which interacts with the OpenAI API",
+  "author": "Ivan Hroshev",
+  "version": "1.4.0",
   "repository": {
     "type": "git",
     "url": "Hroshev"
   },
   "scripts": {
-    "dev": "vc dev",
-    "start": "ngrok http 3000"
+    "dev": "nodemon index.mjs",
+    "start": "node index.mjs",
+    "ngrok": "ngrok http 3000"
   },
   "dependencies": {
+    "telegraf": "latest",
     "dotenv": "latest",
-    "mongodb": "5.0",
     "ngrok": "latest",
-    "openai": "latest",
-    "telebot": "latest",
-    "telebot-vercel": "latest"
+    "openai": "latest"
   },
-  "peerDependencies": {
-    "vercel": "latest"
+  "devDependencies": {
+    "nodemon": "latest"
   }
 }

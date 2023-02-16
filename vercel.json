@@ -1,9 +1,7 @@
 {
-  "functions": {
-    "api/**": {
-      "includeFiles": "node_modules/telebot/plugins/**"
-    }
-  },
+  "routes": [
+    { "src": "/bot", "dest": "/api/bot" }
+  ],
   "github": {
     "silent": true
   }
