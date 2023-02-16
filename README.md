@@ -7,18 +7,18 @@
 ### How to use for your project
 
 Click the Deploy with Vercel button
+
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FPonomareVlad%2FTeleVercelBot&env=TELEGRAM_BOT_TOKEN&envDescription=Telegram%20Bot%20Token%20from%20%40BotFather&project-name=telegram-bot&repo-name=telegram-bot)
 
 Create a new project your GitHub and deploy
 
 Next, in the settings of your project add a new variable
 
-In Deployment, go to your project and click "Set WebHook Url"
-
 ```bash
 API_KEY  '<your OpenAI token>'
 ```
 
+In Deployment, go to your project and click "Set WebHook Url"
 
 ### Run locally
 
