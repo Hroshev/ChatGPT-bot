@@ -1,6 +1,5 @@
 import TeleBot from "telebot"
 import dotenv from 'dotenv'
-import axios from 'axios'
 import { Configuration, OpenAIApi } from "openai"
 
 const bot = new TeleBot(process.env.TELEGRAM_BOT_TOKEN)
@@ -18,30 +17,18 @@ bot.on('text', async (msg) => {
   if (msg.text.startsWith('/')) return;
   try {
     bot.sendAction(msg.chat.id, 'typing')
-
-    // Retrieve current news headlines
-    const newsResponse = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API}`)
-    const headlines = newsResponse.data.articles.map(article => article.title)
-
-    // Get current date
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.toLocaleString('default', { month: 'long' });
-    const day = today.getDate();
-
     const response = await openai.createCompletion({
         model: "text-davinci-003",
-        prompt: `Сегодня ${day} ${month} ${year}. Вот некоторые заголовки последних новостей:\n${headlines.join('\n')}\n\n${msg.text}`,
-        temperature: 0.2,
-        max_tokens: 800,
+        prompt: msg.text,
+        temperature: 0.3,
+        max_tokens: 700,
         top_p: 1,
         frequency_penalty: 0,
-        presence_penalty: 0,
+        presence_penalty: 0.6,
     })
     // Send response back to user
     await msg.reply.text(response.data.choices[0].text)
   } catch (error) {
-    console.error(error)
     await msg.reply.text(`Что-то пошло не так😱\n Ошибки от сервера`)
   }
 })

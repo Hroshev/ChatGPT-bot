@@ -3,51 +3,11 @@
 ## How to use the OpenAI API
 
 At the moment this is used to study and test the OpenAI API. [OpenAPI documentation](https://openai.com/api/).
-1. The OpenAI API processes information in 2020, so the AI may not be aware of current events. We will use the news API to report.
+1. The OpenAI API processes information in 2020, so the AI may not be aware of current events.
 
 2. The bot does not respond to past messages, the data is processed on the server side. To make the bot remember past messages and respond to them, you will need to store the messages in a database or some other data structure that your bot can access. One approach is to use a key-value store like Redis or Memcached to store past messages. You can use the user's ID as the key and the message as the value.
 
 3. The bot only responds to text messages.
-
-```javascript
-const configuration = new Configuration({
-    apiKey: process.env.API_KEY,
-    timeZone: 'Europe/Kyiv' //Set up OpenAI API with your timezone
-});
-const openai = new OpenAIApi(configuration);
-
-bot.on('text', async (msg) => {
-  if (msg.text.startsWith('/')) return;
-  try {
-    bot.sendAction(msg.chat.id, 'typing')
-
-    // Retrieve current news headlines
-    const newsResponse = await axios.get(`https://newsapi.org/v2/top-headlines?country=us&apiKey=${process.env.NEWS_API}`)
-    const headlines = newsResponse.data.articles.map(article => article.title)
-
-    // Get current date
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.toLocaleString('default', { month: 'long' });
-    const day = today.getDate();
-
-    const response = await openai.createCompletion({
-        model: "text-davinci-003",
-        prompt: `Сегодня ${day} ${month} ${year}. Вот некоторые заголовки последних новостей:\n${headlines.join('\n')}\n\n${msg.text}`,
-        temperature: 0.3,
-        max_tokens: 800,
-        top_p: 0.7,
-        frequency_penalty: 0,
-        presence_penalty: 0,
-    })
-    // Send response back to user
-    await msg.reply.text(response.data.choices[0].text)
-  } catch (error) {
-    console.error(error)
-    await msg.reply.text(`Что-то пошло не так😱\n Ошибки от сервера`)
-  }
-})
-```
 
 ## Using settings for openai
 
@@ -67,24 +27,21 @@ bot.on('text', async (msg) => {
 
 ## How to use for your project
 
-You need to get 3 keys to work with this bot.
+You need to get 2 keys to work with this bot.
 
 1. [OpenAI API](https://openai.com/)
 
 2. [Telegram token](https://telegram.me/BotFather)
 
-3. [New API](https://newsapi.org/) - get information about the latest events
-
 Click the Deploy with Vercel button.
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FPonomareVlad%2FTeleVercelBot&env=TELEGRAM_BOT_TOKEN&env=API_KEY&env=NEWS_API&repo-name=telegram-bot)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FPonomareVlad%2FTeleVercelBot&env=TELEGRAM_BOT_TOKEN&env=API_KEY&repo-name=telegram-bot)
 
 Change the project configurations (Variables). 
 
 ```javascript
 TELEGRAM_BOT_TOKEN = 'your Telegram bot token'
 API_KEY = 'your OpenAI API key'
-NEWS_API = 'your news API key token'
 ```
 
 Create a new project on GitHub and deploy it to Vercel. Once created, go to Deployment to your project and click "Set WebHook Url".
@@ -96,7 +53,6 @@ You need to create a .env file in the root of the project and add your keys to i
 ```javascript
 TELEGRAM_BOT_TOKEN = 'your Telegram bot token'
 API_KEY = 'your OpenAI API key'
-NEWS_API = 'your news API key token'
 ```
 
 Install all dependencies.
